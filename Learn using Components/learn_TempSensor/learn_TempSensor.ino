@@ -1,7 +1,7 @@
 #include <DHT.h>
 
-#define DHTPIN 7       // Data pin
-#define DHTTYPE DHT11  // Sensor type
+#define DHTPIN 2       // DATA pin connected to D2
+#define DHTTYPE DHT11  // Change to DHT22 if needed
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -11,15 +11,15 @@ void setup() {
 }
 
 void loop() {
-  float temperature = dht.readTemperature(); // °C
+  float temp = dht.readTemperature(); // Celsius
 
-  if (isnan(temperature)) {
+  if (isnan(temp)) {
     Serial.println("Failed to read from DHT sensor!");
     return;
   }
 
   Serial.print("Temperature: ");
-  Serial.print(temperature);
+  Serial.print(temp);
   Serial.println(" °C");
 
   delay(2000);
