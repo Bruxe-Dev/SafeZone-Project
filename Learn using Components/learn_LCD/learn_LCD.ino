@@ -1,89 +1,27 @@
 #include <LiquidCrystal.h>
 
+// RS, E, D4, D5, D6, D7
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
-void typeText(const char *text, int row) {
-  lcd.setCursor(0, row);
-
-  for (int i = 0; text[i] != '\0'; i++) {
-    lcd.print(text[i]);
-    delay(150);
-  }
-}
-byte spin0[8] = {
-  0b00100,
-  0b01100,
-  0b11100,
-  0b01100,
-  0b00100,
-  0b00000,
-  0b00000,
-  0b00000
-};
-
-byte spin1[8] = {
-  0b00100,
-  0b00110,
-  0b00111,
-  0b00110,
-  0b00100,
-  0b00000,
-  0b00000,
-  0b00000
-};
-
-byte spin2[8] = {
-  0b00000,
-  0b00000,
-  0b00100,
-  0b01110,
-  0b11111,
-  0b00000,
-  0b00000,
-  0b00000
-};
-
-byte spin3[8] = {
-  0b00000,
-  0b00000,
-  0b11111,
-  0b01110,
-  0b00100,
-  0b00000,
-  0b00000,
-  0b00000
-};
-
+String message = "Hello World! Welcome!";
+int delayTime = 200; // milliseconds between each letter
 
 void setup() {
-  lcd.begin(16, 2);
-  lcd.clear();
-
-  typeText("SYSTEM CHECK ", 0);
-  delay(2000);
-
-  // Load custom characters
-  lcd.createChar(0, spin0);
-  lcd.createChar(1, spin1);
-  lcd.createChar(2, spin2);
-  lcd.createChar(3, spin3);
-
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("PLEASE WAIT");
-
-  // Spinner position
-  lcd.setCursor(13, 0);
-
-  // Animate loading icon
-  for (int i = 0; i < 20; i++) {
-    lcd.write(byte(i % 4));
-    delay(200);
-  }
-
-  lcd.clear();
-  lcd.print("DONE!");
-};
+  lcd.begin(16, 2);  // 16x2 LCD
+}
 
 void loop() {
+  typeMessage(message, 0); // Display on row 0 (top row)
+  delay(1000);             // Wait 1 second
+  lcd.clear();             // Clear the screen
+  delay(500);
+}
+
+// Function to type message letter by letter
+void typeMessage(String text, int row) {
+  lcd.setCursor(0, row);       // Start at first column of the row
+  for (int i = 0; i < text.length(); i++) {
+    lcd.print(text[i]);        // Print one letter
+    delay(delayTime);          // Wait before next letter
+  }
 }
