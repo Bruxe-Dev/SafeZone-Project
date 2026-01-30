@@ -22,7 +22,9 @@ DHT dht(DHT_PIN, DHTTYPE);
 
 int fireTempThreshold = 40;
 int dangerDistance = 50; // person detection distance
-int typeDelay = 50;  // faster typing
+int typeDelay = 50;  
+const long fastBlinkInterval = 100;  // faster blink for fire + person
+
 
 // Non-blocking blink variables
 unsigned long previousMillis = 0;
@@ -79,7 +81,7 @@ void setup() {
 }
 
 void loop() {
-  int flame = digitalRead(FLAME_PIN); // LOW when fire detected
+  int flame = digitalRead(FLAME_PIN); // HIGH when fire detected
   float temp = dht.readTemperature();
   if (isnan(temp)) temp = 0;
   long distance = getDistance(); // person detection
@@ -88,7 +90,7 @@ void loop() {
   unsigned long currentMillis = millis();
 
   // ================= CASE 1: Fire + NO person =================
-  if ((flame == LOW || temp >= fireTempThreshold) && distance > dangerDistance) {
+  if ((flame == HIGH || temp >= fireTempThreshold) && distance > dangerDistance) {
     allOff();
     // blink yellow
     if (currentMillis - previousMillis >= blinkInterval) {
@@ -103,15 +105,17 @@ void loop() {
   }
 
   // ================= CASE 2: Fire + PERSON nearby =================
-  else if ((flame == LOW || temp >= fireTempThreshold) && distance <= dangerDistance) {
+  else if ((flame == HIGH || temp >= fireTempThreshold) && distance <= dangerDistance) {
     allOff();
     // alternate red and yellow
-    if (currentMillis - previousMillis >= blinkInterval) {
-      previousMillis = currentMillis;
-      redState = !redState;
-      digitalWrite(RED_LED, redState ? HIGH : LOW);
-      digitalWrite(YELLOW_LED, !redState ? HIGH : LOW);
-    }
+   // alternate red and yellow FAST
+      if (currentMillis - previousMillis >= fastBlinkInterval) {
+        previousMillis = currentMillis;
+        redState = !redState;
+        digitalWrite(RED_LED, redState ? HIGH : LOW);
+        digitalWrite(YELLOW_LED, !redState ? HIGH : LOW);
+      }
+
     typeMessage("FIRE ALERT!", 0);
     typeMessage("PERSON DETECTED", 1);
 
@@ -126,15 +130,23 @@ void loop() {
     typeMessage("AREA SAFE", 1);
     // no buzzer
   }
-
-  // ================= CASE 4: No fire + NO person =================
-  else {
+// ================= CASE 4: No fire + NO person =================
+else {
     allOff();
     digitalWrite(GREEN_LED, HIGH);
-    typeMessage("AREA SAFE", 0);
-    typeMessage("NO PERSON", 1);
-    // no buzzer
-  }
 
-  delay(200);
+    // Display "AREA SAFE" on first row
+    lcd.setCursor(0, 0);
+    lcd.print("AREA SAFE");
+
+    // Display temperature on second row
+    lcd.setCursor(0, 1);
+    lcd.print("Temp: ");
+    lcd.print(temp);   // float printed directly works
+    lcd.print((char)223); // degree symbol
+    lcd.print("C");
+}
+
+
+  delay(1500);
 }
