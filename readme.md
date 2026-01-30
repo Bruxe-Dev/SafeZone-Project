@@ -92,7 +92,7 @@ int dangerDistance = 50;      // cm
 | ------------------- | ---------------------------- | ---------------------------------------- |
 | 🔥 Fire + 👤 Person | FIRE ALERT / PERSON DETECTED | 🔴🟡 Red & Yellow blink FAST alternately |
 | 🔥 Fire + No Person | FIRE ALERT / NO PERSON       | 🟡 Yellow blinks slowly                  |
-| No Fire + 👤 Person | PERSON DETECTED / AREA SAFE  | ⚪ White ON                               |
+| No Fire + 👤 Person | AREA SAFE                    upda| ⚪ White ON                               |
 | No Fire + No Person | AREA SAFE / Temp: XX°C       | 🟢 Green ON                              |
 
 ---
