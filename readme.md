@@ -172,10 +172,12 @@ This project is open for **educational and personal use**. Feel free to modify a
 
 ## 👨‍💻 Author
 
-**CoreBotics :-Sano Chretien** -[https:](https://github.com/chretien527)
-            **-ISHIMWE Linaa** -[https:](https://github.com/Linaa0)
-            **-Bruce NIBEZA**  -[https:](https://github.com/Bruxe-Dev)        
-**SafeZone Project**
+## 👥 CoreBotics Team
+
+- **`Sano Chretien`** – [@chretien527](https://github.com/chretien527)
+- **`Ishimwе Linaa`** – [@Linaa0](https://github.com/Linaa0)
+- **`Bruce NIBEZA`** – [@Bruxe-Dev](https://github.com/Bruxe-Dev)
+
 Designed for learning embedded systems, IoT, and safety applications.
 
 ---
