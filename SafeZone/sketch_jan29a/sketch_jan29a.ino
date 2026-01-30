@@ -21,7 +21,7 @@ LiquidCrystal lcd(8, 9, 10, 11, 12, 13);
 DHT dht(DHT_PIN, DHTTYPE);
 
 int fireTempThreshold = 40;
-int dangerDistance = 50; // person detection distance
+int dangerDistance = 5; // person detection distance
 int typeDelay = 50;  
 const long fastBlinkInterval = 100;  // faster blink for fire + person
 
