@@ -1,7 +1,7 @@
 import serial
 import winsound
+import time
 
-# change COM port if needed
 arduino = serial.Serial('COM6', 9600)
 
 while True:
@@ -9,9 +9,14 @@ while True:
     print(data)
 
     if data == "ALERT1":
-        # Fire + no person: normal alert
-        winsound.Beep(1400, 500)  # frequency 1400Hz, duration 500ms
+        frequency = 1500  # Hz
+        duration = 500    # ms
+        winsound.Beep(frequency, duration)
+        time.sleep(0.1)  
 
     elif data == "ALERT2":
-        # Fire + person nearby: higher alert
-        winsound.Beep(2000, 500)  # frequency 2000Hz, duration 500ms
+        frequency = 2500  
+        duration = 150   
+        for _ in range(4):
+            winsound.Beep(frequency, duration)
+            time.sleep(0.05)  # very short pause between beeps

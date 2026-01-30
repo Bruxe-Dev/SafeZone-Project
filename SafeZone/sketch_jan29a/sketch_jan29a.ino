@@ -88,7 +88,7 @@ void loop() {
   unsigned long currentMillis = millis();
 
   // ================= CASE 1: Fire + NO person =================
-  if ((flame == HIGH || temp >= fireTempThreshold) && distance > dangerDistance) {
+  if ((flame == LOW || temp >= fireTempThreshold) && distance > dangerDistance) {
     allOff();
     // blink yellow
     if (currentMillis - previousMillis >= blinkInterval) {
@@ -103,7 +103,7 @@ void loop() {
   }
 
   // ================= CASE 2: Fire + PERSON nearby =================
-  else if ((flame == HIGH || temp >= fireTempThreshold) && distance <= dangerDistance) {
+  else if ((flame == LOW || temp >= fireTempThreshold) && distance <= dangerDistance) {
     allOff();
     // alternate red and yellow
     if (currentMillis - previousMillis >= blinkInterval) {
